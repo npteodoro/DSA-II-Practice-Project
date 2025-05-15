@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "hash.h"
+#include "list.h"
+#include "parser.h"
+#define DEFAULT_CAPACITY 11
+#define DEFAULT_PATH "hash_nome.txt"
+
+void default_test_case(hash* hash_table) {
+    initialize_hash(hash_table, DEFAULT_CAPACITY, DEFAULT_PATH);
+
+    student default_students[5] = {
+        [0].name = "Marco",
+        [0].course = "eng-comp",
+        [0].nusp = 69,
+
+        [1].name = "Pedro",
+        [1].course = "eng-comp",
+        [1].nusp = 420,
+
+        [2].name = "Luis",
+        [2].course = "eng-comp",
+        [2].nusp = 24,
+
+        [3].name = "Kaue A",
+        [3].course = "eng-comp",
+        [3].nusp = 13,
+
+        [4].name = "Mateus",
+        [4].course = "eng-comp",
+        [4].nusp = 777,
+    };
+
+    for(int i = 0; i < 5; i++) {
+        hash_insert(hash_table, default_students[i]);
+    }
+
+    for(int i = 4; i > 2; i--) {
+        hash_remove(hash_table, default_students[i].name);
+    }
+
+    save_hash_file(hash_table);
+    
+    //load_hash_file(hash_table);
+    hash_search(hash_table, "Marco");
+    hash_search(hash_table, "Pedro");
+    hash_search(hash_table, "Kaue");
+    
+}
+
+int main(int argc, char* argv[]) {
+    parser* input_parser = parse_command_line_arguments(argc, argv);
+    if(input_parser == NULL) {
+        printf("Error! (parser is null)\n");
+        exit(1);
+    }
+
+    hash* hash_table = new_hash();
+    if(hash_table == NULL) {
+        printf("Error! (hash table is null)\n");
+        exit(1);
+    }
+
+    switch (input_parser->command)
+    {
+    case NONE:
+        default_test_case(hash_table);
+        break;
+    case CREATE:
+        break;
+    case SEARCH:
+        break;
+    case INSERT:
+        break;
+    case REMOVE:
+        break;
+    default:
+        break;
+    }
+
+    return 0;
+}
