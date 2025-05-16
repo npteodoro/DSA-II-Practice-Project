@@ -31,7 +31,7 @@
     cd DSA-II-Practice-Project
     ```
 
-1. Create your contribuiting branch
+1. Create your contributing branch
 
     ```bash
     git checkout -b <type>/<alias>
