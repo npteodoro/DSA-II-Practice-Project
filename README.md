@@ -1,6 +1,6 @@
 # DSA-II-Practice-Project
 
-## How to contribuite
+## How to contribute
 
 1. Check if git is installed
 
