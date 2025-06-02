@@ -6,11 +6,11 @@
 
 
 
-char* FORMATSTRING(const char* palavra) // funÁ„o para as palavras ficarem em maiscula
+char* FORMATSTRING(const char* palavra) // fun√ß√£o para as palavras ficarem em maiscula
 {
-    int i; //DECLARA«√O DE VARIAVEL AUXILIAR
+    int i; //DECLARA√á√ÉO DE VARIAVEL AUXILIAR
 
-    char* copia = malloc((strlen(palavra) + 5) * sizeof(char)); // Aloca espaÁo suficiente para a copia da palavra
+    char* copia = malloc((strlen(palavra) + 1) * sizeof(char)); // Aloca espa√ßo suficiente para a c√≥pia da palavra (inclui terminador nulo)
     if (copia != NULL) {
         strcpy(copia, palavra); //copia a palavra
     }
@@ -27,7 +27,7 @@ char* INSERTIONSORT(const char* palavra)
     int i,j,posicao;
     char letra;
 
-     char* copia = malloc((strlen(palavra) + 5) * sizeof(char)); // Aloca espaÁo suficiente para a copia da palavra
+     char* copia = malloc((strlen(palavra) + 5) * sizeof(char)); // Aloca espa√ßo suficiente para a copia da palavra
     if (copia != NULL) strcpy(copia, palavra); //copia a palavra
 
    for(i=0;i<strlen(copia);i++) //para todas as letras na palavra busca o local e insere
@@ -46,7 +46,7 @@ char* INSERTIONSORT(const char* palavra)
     return copia;
 }
 
- int BINARYSEARCH(char *palavra, int left, int right, char letra) //funcao para fazer busca bin·ria em um vetor
+ int BINARYSEARCH(char *palavra, int left, int right, char letra) //funcao para fazer busca bin√°ria em um vetor
 { int mid;
     while(left < right)
     {
@@ -67,9 +67,9 @@ void TESTEPALAVRAS (const char* PALAVRA_ORIGINAL_1, const char* PALAVRA_ORIGINAL
 
     printf("Palavra 1: %s - Palavra 2: %s - Anagrama? ", PALAVRA_ORIGINAL_1,PALAVRA_ORIGINAL_2);
 
-    if(strlen(PALAVRA_ORIGINAL_1) != strlen(PALAVRA_ORIGINAL_2))//se nao tiver o mesmo tamanho nao eh anagrama, n„o precisa ordenar
+    if(strlen(PALAVRA_ORIGINAL_1) != strlen(PALAVRA_ORIGINAL_2))//se nao tiver o mesmo tamanho nao eh anagrama, n√£o precisa ordenar
     {
-        printf ("n„o");
+        printf ("n√£o");
         return;
     }
 
@@ -90,7 +90,7 @@ void TESTEPALAVRAS (const char* PALAVRA_ORIGINAL_1, const char* PALAVRA_ORIGINAL
 
 //COMPARO PALAVRA 1 COM PALAVRA 2
 
-    if (strcmp(PALAVRA_ORDENADA_1,PALAVRA_ORDENADA_2)) printf("n„o"); //se forem diferentes, n„o s„o anagramas
-    else printf("sim"); // se as palavras padronizadas e ordenadas forem iguais s„o anagramas
+    if (strcmp(PALAVRA_ORDENADA_1,PALAVRA_ORDENADA_2)) printf("n√£o"); //se forem diferentes, n√£o s√£o anagramas
+    else printf("sim"); // se as palavras padronizadas e ordenadas forem iguais s√£o anagramas
 
 }
