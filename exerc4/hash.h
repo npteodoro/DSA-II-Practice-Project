@@ -1,13 +1,7 @@
 #ifndef HASH_H
 #define HASH_H
 #include <stdio.h>
-
-typedef struct student
-{
-    char* name;
-    char* course;
-    unsigned int nusp;
-} student;
+#include "list.h"
 
 typedef struct hash
 {
