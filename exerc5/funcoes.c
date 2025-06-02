@@ -10,7 +10,7 @@ char* FORMATSTRING(const char* palavra) // função para as palavras ficarem em 
 {
     int i; //DECLARAÇÃO DE VARIAVEL AUXILIAR
 
-    char* copia = malloc((strlen(palavra) + 1) * sizeof(char)); // Aloca espaço suficiente para a cópia da palavra (inclui terminador nulo)
+    char* copia = malloc((strlen(palavra) + 5) * sizeof(char)); // Aloca espaço suficiente para a cópia da palavra (inclui terminador nulo)
     if (copia != NULL) {
         strcpy(copia, palavra); //copia a palavra
     }
@@ -31,7 +31,7 @@ char* INSERTIONSORT(const char* palavra)
      char* copia = malloc((strlen(palavra) + 5) * sizeof(char)); // Aloca espaço suficiente para a copia da palavra
     if (copia != NULL) strcpy(copia, palavra); //copia a palavra
 
-   for(i=0;i<strlen(copia);i++) //para todas as letras na palavra busca o local e insere
+   for(i=1;i<strlen(copia);i++) //para todas as letras na palavra busca o local e insere
    {
        letra = copia[i]; //letra a ser buscada
     if (letra<copia[i-1]){
