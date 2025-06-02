@@ -14,7 +14,8 @@ char* FORMATSTRING(const char* palavra) // função para as palavras ficarem em 
     if (copia != NULL) {
         strcpy(copia, palavra); //copia a palavra
     }
-    for (i=0;i< strlen(copia);i++) //checar letra por letra
+    int len = strlen(copia);
+    for (i = 0; i < len; i++) //checar letra por letra
     {
         if (copia[i] > 96 && copia[i] < 123 ) copia[i] = copia[i] - 32; //transformar minuscula em maiscula
     }
