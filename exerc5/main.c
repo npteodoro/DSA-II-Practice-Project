@@ -9,20 +9,24 @@ int main( int argc, char** argv)
 
   char *PALAVRA_ORIGINAL_1, *PALAVRA_ORIGINAL_2;
 
-
+      if(argc > 3){
+        printf("Erro: Mais de dois argumentos passados, por favor rode o programa da seguinte maneira : \n bash run.sh <palavra1> <palavra2>\n");
+        printf("Ou rode o programa sem argumentos para ver os casos de teste padr√£o:\n bash run.sh\n");
+        return 1;
+    }
 
     if (argc < 3){
 
 
-//CASO PADR√O
+//CASO PADR√ÉO
         PALAVRA_ORIGINAL_1 = malloc(15 * sizeof(char));
         PALAVRA_ORIGINAL_2 = malloc(15 * sizeof(char));
-//CASO PADR√O PEDRO E PODER
+//CASO PADR√ÉO PEDRO E PODER
         strcpy(PALAVRA_ORIGINAL_1,"Pedro");
         strcpy(PALAVRA_ORIGINAL_2,"Poder");
         TESTEPALAVRAS(PALAVRA_ORIGINAL_1,PALAVRA_ORIGINAL_2);
         printf("\n");
-//CASO PADR√O BRASIL E BRASILEIRO
+//CASO PADR√ÉO BRASIL E BRASILEIRO
         strcpy(PALAVRA_ORIGINAL_1,"Brasil");
         strcpy(PALAVRA_ORIGINAL_2,"Brasileiro");
         TESTEPALAVRAS(PALAVRA_ORIGINAL_1,PALAVRA_ORIGINAL_2);
@@ -36,7 +40,13 @@ int main( int argc, char** argv)
         strcpy(PALAVRA_ORIGINAL_2 ,argv[2]);
         TESTEPALAVRAS(PALAVRA_ORIGINAL_1,PALAVRA_ORIGINAL_2);
     }
-
+//liberar todas as mem√≥rias alocadas no main
+    PALAVRA_ORIGINAL_1 = NULL;
+    PALAVRA_ORIGINAL_2 = NULL;
+    free(PALAVRA_ORIGINAL_1);
+    free(PALAVRA_ORIGINAL_2);
+    
+   printf("\n\n");
 
 return 0;
 }
