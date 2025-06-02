@@ -94,4 +94,16 @@ void TESTEPALAVRAS (const char* PALAVRA_ORIGINAL_1, const char* PALAVRA_ORIGINAL
     if (strcmp(PALAVRA_ORDENADA_1,PALAVRA_ORDENADA_2)) printf("não"); //se forem diferentes, não são anagramas
     else printf("sim"); // se as palavras padronizadas e ordenadas forem iguais são anagramas
 
+
+    //liberar as memórias alocadas nas funções insertionsort e formatstring
+    PALAVRA_PADRONIZADA_1 = NULL;
+    PALAVRA_PADRONIZADA_2 = NULL;
+    PALAVRA_ORDENADA_1 = NULL;
+    PALAVRA_ORDENADA_2 = NULL;
+    free(PALAVRA_PADRONIZADA_1);
+    free(PALAVRA_PADRONIZADA_2);
+    free(PALAVRA_ORDENADA_1);
+    free(PALAVRA_ORDENADA_2);
+    
+
 }
