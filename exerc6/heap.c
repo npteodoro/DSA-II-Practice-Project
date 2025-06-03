@@ -9,8 +9,9 @@ void heapify( int* heap_max, int tam, const int j) //função que verifica se o 
 
 
     int maior_filho; // <-- variavel auxiliar que tem o indice do maior filho
-    maior_filho = (heap_max [2*j + 1] > heap_max[2*j + 2] )? (2*j + 1) : (2*j + 2); // <-- descobre qual é a posição do maior filho
-
+     if (2*j+2 < tam) maior_filho = (heap_max [2*j + 1] > heap_max[2*j + 2] )? (2*j + 1) : (2*j + 2); // <-- descobre qual é a posição do maior filho
+     else maior_filho = 2*j + 1; // <-- se não tiver filho direito, o filho esquerdo é o maior filho
+    if (maior_filho >= tam) return; // <-- se não tiver filhos, sai da recursividade
     //se o pai for menor que o maior filho os dois trocam de lugar:
     if (heap_max [j] < heap_max [maior_filho]) {
  int tr1,tr2; // <-- variavel auxiliar para a troca
@@ -84,7 +85,7 @@ if (tam-k == 3) break;
 
 
 
-    for (int m=0;m<=tam/2;m++) // função para transformar crescente em decrescente
+    for (int m=0;m<tam/2;m++) // função para transformar crescente em decrescente
     {
         
     //troca de posição numeros simétricos em relação ao meio
