@@ -13,15 +13,7 @@ void swap_int(int* a, int *b) {
     *b = c;      // Copy temporary value to second integer
 }
 
-/**
- * Quicksort implementation using a unique partitioning approach
- * This implementation partitions from right to left, placing smaller elements
- * at the end of the array section, then moves the pivot to its correct position
- * 
- * @param arr Array to be sorted
- * @param start Starting index of the section to sort
- * @param arr_size Size of the array (one past the last valid index)
- */
+
 void quicksort(int* arr, int start, int arr_size) {
     // Base case: if start index >= array size, nothing to sort
     if(start >= arr_size) return;
@@ -57,3 +49,4 @@ void quicksort(int* arr, int start, int arr_size) {
     
     // Recursively sort the right partition (elements greater than or equal to pivot)
     quicksort(arr, pivot_pos+1, arr_size);
+}
