@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "hanoi.h"
 #include "quick.h"
 #include "heap.h"
