@@ -4,6 +4,8 @@
 #include "hanoi.h"
 #include "quick.h"
 #include "heap.h"
+#include "test.h"
+
 
 int main(int argc, char *argv[]) {
     // Check if no arguments are provided
