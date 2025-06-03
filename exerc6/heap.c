@@ -13,7 +13,12 @@ void heapify( int* heap_max, int tam, const int j) //função que verifica se o 
 
     //se o pai for menor que o maior filho os dois trocam de lugar:
     if (heap_max [j] < heap_max [maior_filho]) {
-            heap_max[j] = heap_max[j] + heap_max[maior_filho] - (heap_max[maior_filho] = heap_max[j]);
+ int tr1,tr2; // <-- variavel auxiliar para a troca
+ tr1 =  heap_max[j];
+ tr2 = heap_max[maior_filho];
+ heap_max[maior_filho] = tr1;
+ heap_max[j] = tr2;
+
     }
     else return;// <-- se não sai da recursividade
 
@@ -21,7 +26,7 @@ void heapify( int* heap_max, int tam, const int j) //função que verifica se o 
 return;
 }
 
-void* heapmax ( int* vetor, int tam) //função que transforma o heap em heap máximo
+void heapmax ( int* vetor, int tam) //função que transforma o heap em heap máximo
  {
    int L; //variavel auxiliar
    int meio = tam/2 - 1 ;//variavel auxiliar para saber onde começar a transformação (ultimo nó interno)
@@ -46,12 +51,12 @@ void heapsort (int* vetor, int tam )
 
  //usar propriedades do heapmax para odenar o vetor:
     int k; // <-- varivael auxiliar que indica quantos valores ja estão ordenados
-    int tr1,tr2; // <-- variavel auxiliar para a troca
+    
 
 
     for (k=0; tam - k >= 3 ; k++){
 
-
+ int tr1,tr2; // <-- variavel auxiliar para a troca
  tr1 = vetor[0];
  tr2 = vetor[tam - k-1];
  vetor[tam - k - 1] = tr1;
@@ -66,14 +71,28 @@ if (tam-k == 3) break;
 
     }
 
-    if(vetor[0] > vetor [1] ) vetor[0] = vetor [0] + vetor[1] - (vetor[1] = vetor [0] ); //troca o primeiro pelo segundo, pois sabemos que o terceiro já esta ordenado
- //vetor esta em ordem crescente, contudo para as torres de hanoi é mais facil de visualizar se o vetor estiver em ordem decrescente
+    if(vetor[0] > vetor [1] ) 
+    {
+    //troca o primeiro pelo segundo, pois sabemos que o terceiro já esta ordenado
+        int tr1,tr2; // <-- variavel auxiliar para a troca
+ tr1 = vetor[0];
+ tr2 = vetor[1];
+ vetor[1] = tr1;
+ vetor[0] = tr2;
+    }
+        //vetor esta em ordem crescente, contudo para as torres de hanoi é mais facil de visualizar se o vetor estiver em ordem decrescente
 
 
 
     for (int m=0;m<=tam/2;m++) // função para transformar crescente em decrescente
     {
-        vetor[m] = vetor [m] + vetor[tam-m-1] - (vetor[tam-m-1] = vetor [m] ); //troca de posição numeros simétricos em relação ao meio
+        
+    //troca de posição numeros simétricos em relação ao meio
+int tr1,tr2; // <-- variavel auxiliar para a troca
+ tr1 = vetor[m];
+ tr2 = vetor[tam-m-1];
+ vetor[tam - m - 1] = tr1;
+ vetor[m] = tr2;
     }
 
 
