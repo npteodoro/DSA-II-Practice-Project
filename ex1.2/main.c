@@ -4,18 +4,55 @@
 #include "ex1.h"
 
 
+void run_case(int* numbers, int count, int target) {
+    char string_vector[6][100];
+    int combinations[100][2]; // cria o vetor que armazena o total de combina��es
+    for(int i = 0; i < count; i++)
+    {
+        sprintf(string_vector[i], "%d", numbers[i]); // cria o string que representa o vetor atual
+    }
+
+    char ans[100] = "Nao foi possivel formar o valor alvo";
+    int tcalls = 0;
+    find_expression(count - 1,numbers,0,target,string_vector,ans,0,combinations, &tcalls);
+    printf("%s\n", ans);
+    printf("%d\n", tcalls);
+}
 
 
 int main (int argc, char *argv[])
 {
+
+    if(argc < 2) {
+        int caso1[] = {
+            [0] = 3,
+            [1] = 4,
+            [2] = 2 
+        };
+        int caso2[] = {
+            [0] = 5,
+            [1] = 2,
+            [2] = 1,
+            [3] = 8 
+        };
+        run_case(caso1, 3, 14);
+        run_case(caso2, 4, 16);
+        return 0;
+    }
+
     char ans[100] = "Nao foi possivel formar o valor alvo";// string para armazenar a resposta
     int list[6]; //vetor que armazena a lista atual
     int count = 0;
-    char *ls = argv[1]; // cont�m a linha com os n�meros
+    
+    char* ls = malloc( strlen(argv[1]) + 1);
+    for(int i = 0; i < (int)strlen(argv[1]); i++) {
+        ls[i] = argv[1][i];
+    }
+    ls[strlen(argv[1])] = '\0';
+
     char *a;
     int value = strtol(argv[2],&a,10); // valor desejado
-
-    ls[strcspn(ls,"\n")] = '\0';     // remove o '\n' do final, se houver
+     // remove o '\n' do final, se houver
 
     char *token = strtok(ls, ",");
     while (token != NULL && count < 100) {
@@ -24,8 +61,6 @@ int main (int argc, char *argv[])
         list[count++] = aux;
         token = strtok(NULL, ",");      // pr�ximo token
     }
-
-
 
     char string_vector[6][100];
     int combinations[100][2]; // cria o vetor que armazena o total de combina��es
