@@ -133,7 +133,7 @@ void exec(int *testes)
 {
     for(int i = 0; i < 2; i++){
         int n = testes[i];
-        if(n == -1) break; // Termina se valor for zero
+        if(n == 0) break; // Termina se valor for zero
 
         // Aloca memória para as soluções
         int **vec_sol = (int**)malloc(10000*sizeof(int *));
