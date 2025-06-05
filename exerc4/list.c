@@ -19,6 +19,7 @@ void free_list(list* lst) {
     while(curr != NULL) {
         node* to_free = curr;
         curr = curr->nxt;
+        printf("freeing %s, %s\n", to_free->data.course, to_free->data.name);
         free(to_free->data.course);
         free(to_free->data.name);
         free(to_free);
@@ -79,6 +80,7 @@ void remove_element(list* lst, const char* name_to_remove) {
     if(remove_pos == 0) { // element is the head
         node* out = lst->head;
         lst->head = (lst->head->nxt);
+        printf("freeing %s, %s\n", out->data.course, out->data.name);
         free(out->data.name);
         free(out->data.course);
         free(out);
@@ -88,11 +90,12 @@ void remove_element(list* lst, const char* name_to_remove) {
 
     node* prev_out = lst->head;
     while(--remove_pos) {
-        node* prev_out = prev_out->nxt;
+        prev_out = prev_out->nxt;
     }
 
     node* out = prev_out->nxt;
     prev_out->nxt = out->nxt;
+    printf("freeing %s, %s\n", out->data.course, out->data.name);
     free(out->data.name);
     free(out->data.course);
     free(out);

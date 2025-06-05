@@ -23,15 +23,11 @@ void free_hash(hash* hash_table) {
 }
 
 void initialize_hash(hash* hash_table, unsigned int capacity, const char* path) {
-    hash_table->fhash = fopen(path, "w");
+    FILE* fhash = fopen(path, "w");
+    fclose(fhash);
 
     hash_table->fpath = malloc( strlen(path) * sizeof(char) + 1);
     strcpy(hash_table->fpath, path);
-    
-    if(hash_table->fhash == NULL) {
-        printf("Error! (cant open hash file [%s])\n", path);
-        return;
-    }
 
     hash_table->capacity = capacity;
     hash_table->student_list = malloc( capacity * sizeof( list* ) );
@@ -40,7 +36,6 @@ void initialize_hash(hash* hash_table, unsigned int capacity, const char* path) 
         (hash_table->student_list)[i] = create_list();
     }
 
-    fclose(hash_table->fhash);
 }
 
 unsigned int bits(unsigned int number) {
@@ -168,6 +163,8 @@ void add_student_from_file(hash* hash_table, char* file_line) {
             free(dummy.name);
             free(dummy.course);
             hash_insert(hash_table, to_add);
+            free(to_add.name);
+            free(to_add.course);
         }
         info_pos++;
     }
@@ -212,5 +209,7 @@ void load_hash_file(hash* hash_table, const char* path) {
         }
         //printf("end line\n");
     }
+
+    fclose(fhash);
 
 }

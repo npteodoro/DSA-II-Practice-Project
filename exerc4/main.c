@@ -94,6 +94,8 @@ int main(int argc, char* argv[]) {
         load_hash_file(hash_table, input_parser->path);
         for(int i = 0; i < input_parser->input_size; i++) {
             hash_insert(hash_table, input_parser->new_students[i]);
+            free(input_parser->new_students[i].course);
+            free(input_parser->new_students[i].name);
         }
         break;
     case REMOVE:
