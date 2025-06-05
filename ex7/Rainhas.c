@@ -3,7 +3,7 @@
 #include <string.h>
 #include "Rainhas.h"
 
-// Verifica se a solução atual já foi registrada (para evitar duplicatas)
+// Verifica se a soluÃ§Ã£o atual jÃ¡ foi registrada (para evitar duplicatas)
 int verify_for_replicas(int *cur_table, int tsize, int *tsol, int **cur_sol)
 {
     for(int i = 0; i < (*tsol); i++)
@@ -11,16 +11,16 @@ int verify_for_replicas(int *cur_table, int tsize, int *tsol, int **cur_sol)
         int cont = 0;
         for(int j = 0; j < tsize; j++)
         {
-            // Compara cada posição das soluções já encontradas com a atual
+            // Compara cada posiÃ§Ã£o das soluÃ§Ãµes jÃ¡ encontradas com a atual
             if(cur_sol[i][j] == cur_table[j]) cont++;
         }
         if(cont == tsize)
         {
-            // Se todas as posições são iguais, a solução já existe
+            // Se todas as posiÃ§Ãµes sÃ£o iguais, a soluÃ§Ã£o jÃ¡ existe
             return 0;
         }
     }
-    // Solução é única
+    // SoluÃ§Ã£o Ã© Ãºnica
     return 1;
 }
 
@@ -37,7 +37,7 @@ void vertical_reflect(int *cur_table, int tsize)
 void rotate_ninety_degrees(int *cur_table, int tsize)
 {
     int *aux_table = malloc(tsize * sizeof(int));
-    // Constrói o tabuleiro rotacionado
+    // ConstrÃ³i o tabuleiro rotacionado
     for(int i = 0 ; i < tsize; i++){
         aux_table[cur_table[i]] = tsize - i - 1;
     }
@@ -49,7 +49,7 @@ void rotate_ninety_degrees(int *cur_table, int tsize)
     return;
 }
 
-// Verifica se a solução atual é simétrica a alguma já encontrada
+// Verifica se a soluÃ§Ã£o atual Ã© simÃ©trica a alguma jÃ¡ encontrada
 int check_for_simmetry(int *cur_table, int tsize,int *tsol, int **cur_sol)
 {
     int ok = 1;
@@ -57,9 +57,9 @@ int check_for_simmetry(int *cur_table, int tsize,int *tsol, int **cur_sol)
     // Reflete verticalmente e verifica duplicata
     vertical_reflect(cur_table, tsize);
     ok &= verify_for_replicas(cur_table, tsize, tsol, cur_sol);
-    vertical_reflect(cur_table, tsize); // Reverte a reflexão
+    vertical_reflect(cur_table, tsize); // Reverte a reflexÃ£o
 
-    // Executa rotações e reflexões para cobrir todas as simetrias possíveis
+    // Executa rotaÃ§Ãµes e reflexÃµes para cobrir todas as simetrias possÃ­veis
     rotate_ninety_degrees(cur_table, tsize);
     ok &= verify_for_replicas(cur_table, tsize, tsol, cur_sol);
     vertical_reflect(cur_table, tsize);
@@ -78,12 +78,12 @@ int check_for_simmetry(int *cur_table, int tsize,int *tsol, int **cur_sol)
     ok &= verify_for_replicas(cur_table, tsize, tsol, cur_sol);
     vertical_reflect(cur_table, tsize);
 
-    rotate_ninety_degrees(cur_table, tsize); // Retorna à orientação original
+    rotate_ninety_degrees(cur_table, tsize); // Retorna Ã  orientaÃ§Ã£o original
 
     return ok;
 }
 
-// Função recursiva que tenta posicionar as rainhas uma por linha
+// FunÃ§Ã£o recursiva que tenta posicionar as rainhas uma por linha
 void find_queens(int row ,int tsize, int **vec_sol, int *cur_table, int *diag, int *columns, int *tsol , int *tcalls)
 {
     (*tcalls)++; // Contador de chamadas recursivas
@@ -91,35 +91,35 @@ void find_queens(int row ,int tsize, int **vec_sol, int *cur_table, int *diag, i
     // Se todas as rainhas foram posicionadas
     if(row == tsize)
     {
-        // Verifica se a solução não é simétrica a alguma já encontrada
+        // Verifica se a soluÃ§Ã£o nÃ£o Ã© simÃ©trica a alguma jÃ¡ encontrada
         if(check_for_simmetry(cur_table,tsize,tsol,vec_sol) == 1)
         {
-            // Armazena a nova solução no vetor de soluções
+            // Armazena a nova soluÃ§Ã£o no vetor de soluÃ§Ãµes
             for(int i = 0; i < tsize; i++)
             {
                 vec_sol[(*tsol)][i] = cur_table[i];
             }
-            (*tsol)++; // Incrementa o número de soluções
+            (*tsol)++; // Incrementa o nÃºmero de soluÃ§Ãµes
         }
         return;
     }
 
-    // Tenta colocar a rainha em todas as colunas disponíveis da linha atual
+    // Tenta colocar a rainha em todas as colunas disponÃ­veis da linha atual
     for(int i = 0; i < tsize; i++)
     {
-        // Verifica se a coluna e diagonais estão livres
+        // Verifica se a coluna e diagonais estÃ£o livres
         if(columns[i] != 1 && diag[row + i] != 1 && diag[3*tsize - 2 + row - i] != 1)
         {
-           // Marca as posições ocupadas
+           // Marca as posiÃ§Ãµes ocupadas
            columns[i] = 1;
            diag[row + i] = 1;
            diag[3*tsize - 2 + row - i] = 1;
            cur_table[row] = i;
 
-           // Chama recursivamente para a próxima linha
+           // Chama recursivamente para a prÃ³xima linha
            find_queens(row + 1, tsize, vec_sol, cur_table, diag, columns, tsol, tcalls);
 
-           // Desmarca posições (backtracking)
+           // Desmarca posiÃ§Ãµes (backtracking)
            columns[i] = 0;
            diag[row + i] = 0;
            diag[3*tsize - 2 + row - i] = 0;
@@ -128,29 +128,29 @@ void find_queens(int row ,int tsize, int **vec_sol, int *cur_table, int *diag, i
     return;
 }
 
-// Função principal de execução: resolve o problema para um vetor de tamanhos de tabuleiro
+// FunÃ§Ã£o principal de execuÃ§Ã£o: resolve o problema para um vetor de tamanhos de tabuleiro
 void exec(int *testes)
 {
     for(int i = 0; i < 2; i++){
         int n = testes[i];
-        if(n == 0) break; // Termina se valor for zero
+        if(n == -1) break; // Termina se valor for zero
 
-        // Aloca memória para as soluções
+        // Aloca memÃ³ria para as soluÃ§Ãµes
         int **vec_sol = (int**)malloc(10000*sizeof(int *));
         for(int i = 0; i < 10000; i++){
             vec_sol[i] = (int *)malloc(n*sizeof(int));
         }
 
-        int *cur_table = malloc(n*sizeof(int));               // Armazena uma solução parcial
-        int *diag = malloc((4*n - 2)*sizeof(int));            // Marca ocupação das diagonais
-        int *columns = malloc(n*sizeof(int));                 // Marca ocupação das colunas
-        int tsol = 0;                                          // Total de soluções
+        int *cur_table = malloc(n*sizeof(int));               // Armazena uma soluÃ§Ã£o parcial
+        int *diag = malloc((4*n - 2)*sizeof(int));            // Marca ocupaÃ§Ã£o das diagonais
+        int *columns = malloc(n*sizeof(int));                 // Marca ocupaÃ§Ã£o das colunas
+        int tsol = 0;                                          // Total de soluÃ§Ãµes
         int tcalls = 0;                                        // Total de chamadas recursivas
 
-        // Inicia a busca por soluções
+        // Inicia a busca por soluÃ§Ãµes
         find_queens(0,n,vec_sol,cur_table,diag,columns, &tsol, &tcalls);
 
-        // Exibe as soluções, se existirem
+        // Exibe as soluÃ§Ãµes, se existirem
         if(tsol != 0)
             for(int i = 0; i < tsol; i++){
                 for(int j = 0; j < n; j++){
@@ -166,11 +166,11 @@ void exec(int *testes)
         else
             printf("Nao existe solucao para %d rainhas\n", n);
 
-        // Exibe estatísticas
+        // Exibe estatÃ­sticas
         printf("O numero de chamadas e %d\n", tcalls);
         printf("O numero de solucoes e %d\n", tsol);
 
-        // Libera memória
+        // Libera memÃ³ria
         free(vec_sol);
         free(cur_table);
         free(diag);
