@@ -7,8 +7,21 @@
 #define DEFAULT_CAPACITY 11
 #define DEFAULT_PATH "hash_nome.txt"
 
+int is_prime(int x) {
+    for(int i = 2; i * i <= x; i++) {
+        if(x % i == 0) return 0;
+    }
+    return 1;
+}
+
+int approx_to_prime(int num) {
+    for(; !is_prime(num); num++) {}
+    return num;
+}
+
 void default_test_case(hash* hash_table) {
-    initialize_hash(hash_table, DEFAULT_CAPACITY, DEFAULT_PATH);
+    const char path[] = "hash_nome.txt"; 
+    initialize_hash(hash_table, DEFAULT_CAPACITY, path);
 
     student default_students[5] = {
         [0].name = "Marco",
@@ -23,7 +36,7 @@ void default_test_case(hash* hash_table) {
         [2].course = "eng-comp",
         [2].nusp = 24,
 
-        [3].name = "Kaue A",
+        [3].name = "Kaue",
         [3].course = "eng-comp",
         [3].nusp = 13,
 
@@ -42,7 +55,7 @@ void default_test_case(hash* hash_table) {
 
     save_hash_file(hash_table);
     
-    //load_hash_file(hash_table);
+    load_hash_file(hash_table, DEFAULT_PATH);
     hash_search(hash_table, "Marco");
     hash_search(hash_table, "Pedro");
     hash_search(hash_table, "Kaue");
@@ -68,16 +81,32 @@ int main(int argc, char* argv[]) {
         default_test_case(hash_table);
         break;
     case CREATE:
+        int hash_capacity = approx_to_prime(input_parser->size);
+        initialize_hash(hash_table, hash_capacity, input_parser->path);
         break;
     case SEARCH:
+        load_hash_file(hash_table, input_parser->path);
+        for(int i = 0; i < input_parser->input_size; i++) {
+            hash_search(hash_table, input_parser->names[i]);
+        }
         break;
     case INSERT:
+        load_hash_file(hash_table, input_parser->path);
+        for(int i = 0; i < input_parser->input_size; i++) {
+            hash_insert(hash_table, input_parser->new_students[i]);
+        }
         break;
     case REMOVE:
+        load_hash_file(hash_table, input_parser->path);
+        for(int i = 0; i < input_parser->input_size; i++) {
+            hash_remove(hash_table, input_parser->names[i]);
+        }
         break;
     default:
         break;
     }
 
+    free_hash(hash_table);
+    free_parser(input_parser);
     return 0;
 }

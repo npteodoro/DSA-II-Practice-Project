@@ -19,9 +19,10 @@ typedef struct list {
 } list;
 
 list* create_list();
-void delete_list(list*);
-void insert(list*, student);
-void remove(list*, student);
-student* search(list*, student);
+void free_list(list*);
+void insert_element(list*, student);
+void remove_element(list*, const char*);
+student* search(list*, const char*);
+student copy_student(const student*); 
 
 #endif
