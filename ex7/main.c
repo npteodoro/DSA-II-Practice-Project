@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
         // Converte o conteúdo do buffer (string) para inteiro e armazena em testes[0]
         testes[0] = atoi(buffer);
 
-        // Define o segundo valor como -1 (nesse código ele não é utilizado ativamente)
-        testes[1] = -1;
+        // Define o segundo valor como 0 (nesse código ele não é utilizado ativamente)
+        testes[1] = 0;
 
         // Libera a memória alocada para o buffer após o uso
         free(buffer);
