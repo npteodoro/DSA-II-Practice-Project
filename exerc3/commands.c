@@ -52,8 +52,10 @@ int inserirCommand(int argc, char *argv[]) {
         if (insertCount > 0 && saveHashTableToFile(argv[2], insertTable)) {
             printf("Success\n");
             result = 0;
-        } else
+        } else {
+            printf("insertcount == %d\n", insertCount);
             printf("Failure\n");
+        }
         
         // Clean up
         destroyHashTable(insertTable);

@@ -39,8 +39,8 @@ void runDefaultTest(void) {
     table = loadHashTableFromFile("hash.txt");
     
     // Search for students (2 existing, 1 non-existent)
-    students = findStudentsByNUSP(table, "420,24,999", &count);
-    
+    students = findStudentsByNUSP(table, "420,24,777", &count);
+    printf("%d", count);
     // Display results
     for (i = 0; i < count; i++) {
         if (students[i])
@@ -49,7 +49,6 @@ void runDefaultTest(void) {
         else
             printf("Key not found\n");
     }
-    
     // Clean up
     free(students);
     destroyHashTable(table);

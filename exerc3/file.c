@@ -7,7 +7,7 @@
 static int countDelimitedItems(const char *str, char delimiter) {
     int count = 1; // Start with 1 for the last item
     while (*str) {
-        if (*str++ == delimiter)
+        if (*str == delimiter)
             count++;
         str++;
     }
@@ -64,7 +64,7 @@ struct HashTable *loadHashTableFromFile(const char *filename) {
                 line[strlen(line) - 1] = '\0';
 
             // Parse line using semicolons as separators
-            if (sscanf(line, "%u;%127[^;];%127s", &nusp, name, course) == 3) {
+            if (sscanf(line, "%u;%127[^;];%127[^\n]", &nusp, name, course) == 3) {
                 // Insert student into the hash table
                 insertStudent(table, nusp, name, course);
             }
@@ -81,7 +81,6 @@ int insertStudentsFromString(struct HashTable *table, const char *inputString) {
     int count = 0;
     unsigned int nusp;
     char name[128], course[128];
-    
     // Process the comma-separated list, reading 3 values at a time
     while (*pos) {
         // Try to parse three values for each student
