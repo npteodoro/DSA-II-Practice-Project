@@ -1,2 +1,2 @@
-gcc main.c funcoes.c -I ./ -o main
+gcc -Wall -Wextra main.c funcoes.c -I ./ -o main
 ./main "$@"
