@@ -41,10 +41,11 @@ int main( int argc, char** argv)
         TESTEPALAVRAS(PALAVRA_ORIGINAL_1,PALAVRA_ORIGINAL_2);
     }
 //liberar todas as memórias alocadas no main
-    PALAVRA_ORIGINAL_1 = NULL;
-    PALAVRA_ORIGINAL_2 = NULL;
     free(PALAVRA_ORIGINAL_1);
     free(PALAVRA_ORIGINAL_2);
+    PALAVRA_ORIGINAL_1 = NULL;
+    PALAVRA_ORIGINAL_2 = NULL;
+    
     
    printf("\n\n");
 
