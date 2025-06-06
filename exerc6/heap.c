@@ -9,9 +9,12 @@ void heapify( int* heap_max, int tam, const int j) //função que verifica se o 
 
 
     int maior_filho; // <-- variavel auxiliar que tem o indice do maior filho
-     if (2*j+2 < tam) maior_filho = (heap_max [2*j + 1] > heap_max[2*j + 2] )? (2*j + 1) : (2*j + 2); // <-- descobre qual é a posição do maior filho
-     else maior_filho = 2*j + 1; // <-- se não tiver filho direito, o filho esquerdo é o maior filho
-    if (maior_filho >= tam) return; // <-- se não tiver filhos, sai da recursividade
+    if(2*j + 2 < tam) {
+        maior_filho = (heap_max [2*j + 1] > heap_max[2*j + 2] )? (2*j + 1) : (2*j + 2); // <-- descobre qual é a posição do maior filho
+    }
+    else maior_filho = 2*j + 1;
+    if(maior_filho >= tam) return;
+
     //se o pai for menor que o maior filho os dois trocam de lugar:
     if (heap_max [j] < heap_max [maior_filho]) {
  int tr1,tr2; // <-- variavel auxiliar para a troca
@@ -47,6 +50,11 @@ void heapsort (int* vetor, int tam )
     //pai do elemento n: floor([n − 1]/2)
     //filho esquerdo do elemento n: 2n + 1
     //filho direito do elemento n: 2n + 2
+    
+    if(tam == 1) {
+        return; // vetor tem tam = 1 portanto ja esta ordenado
+    }
+
  heapmax(vetor,tam); //transformar o vetor em heapmax
 
 
