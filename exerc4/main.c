@@ -25,24 +25,24 @@ void default_test_case(hash* hash_table) {
 
     student default_students[5] = {
         [0].name = "Marco",
-        [0].course = "eng-comp",
-        [0].nusp = 69,
+        [0].course = "fisica",
+        [0].nusp = 1231,
 
         [1].name = "Pedro",
         [1].course = "eng-comp",
-        [1].nusp = 420,
+        [1].nusp = 553452,
 
         [2].name = "Luis",
         [2].course = "eng-comp",
-        [2].nusp = 24,
+        [2].nusp = 89237,
 
         [3].name = "Kaue",
-        [3].course = "eng-comp",
-        [3].nusp = 13,
+        [3].course = "arq",
+        [3].nusp = 9812,
 
         [4].name = "Mateus",
         [4].course = "eng-comp",
-        [4].nusp = 777,
+        [4].nusp = 12314,
     };
 
     for(int i = 0; i < 5; i++) {
@@ -53,7 +53,7 @@ void default_test_case(hash* hash_table) {
         hash_remove(hash_table, default_students[i].name);
     }
 
-    save_hash_file(hash_table);
+    save_hash_file(hash_table, DEFAULT_PATH);
     
     load_hash_file(hash_table, DEFAULT_PATH);
     hash_search(hash_table, "Marco");
@@ -83,26 +83,36 @@ int main(int argc, char* argv[]) {
     case CREATE:
         int hash_capacity = approx_to_prime(input_parser->size);
         initialize_hash(hash_table, hash_capacity, input_parser->path);
+        save_hash_file(hash_table, input_parser->path);
         break;
     case SEARCH:
+        //hash_capacity = count_file_lines(input_parser->path);
+        //initialize_hash(hash_table, hash_capacity, input_parser->path);
         load_hash_file(hash_table, input_parser->path);
+        //save_hash_file(hash_table, input_parser->path);
         for(int i = 0; i < input_parser->input_size; i++) {
             hash_search(hash_table, input_parser->names[i]);
         }
         break;
     case INSERT:
+        hash_capacity = count_file_lines(input_parser->path);
+        //initialize_hash(hash_table, hash_capacity, input_parser->path);
         load_hash_file(hash_table, input_parser->path);
         for(int i = 0; i < input_parser->input_size; i++) {
             hash_insert(hash_table, input_parser->new_students[i]);
             free(input_parser->new_students[i].course);
             free(input_parser->new_students[i].name);
         }
+        save_hash_file(hash_table, input_parser->path);
         break;
     case REMOVE:
+        //hash_capacity = count_file_lines(input_parser->path);
+        //initialize_hash(hash_table, hash_capacity, input_parser->path);
         load_hash_file(hash_table, input_parser->path);
         for(int i = 0; i < input_parser->input_size; i++) {
             hash_remove(hash_table, input_parser->names[i]);
         }
+        save_hash_file(hash_table, input_parser->path);
         break;
     default:
         break;

@@ -100,8 +100,8 @@ void hash_search(hash* hash_table, const char* name) {
     }
 }
 
-void save_hash_file(hash* hash_table) {
-    hash_table->fhash = fopen(hash_table->fpath, "w");
+void save_hash_file(hash* hash_table, const char* path) {
+    hash_table->fhash = fopen(path, "w");
     if(hash_table->fhash == NULL) {
         printf("Error opening hash file [%s]\n", hash_table->fpath);
         return;
@@ -148,7 +148,8 @@ void add_student_from_file(hash* hash_table, char* file_line) {
         .course = ""
     };
     char double_dot[] = ":";
-    for(char* infos = strtok(file_line, double_dot); infos != NULL; infos = strtok(NULL, double_dot)) {
+    char* saveptr;
+    for(char* infos = __strtok_r(file_line, double_dot, &saveptr); infos != NULL; infos = __strtok_r(NULL, double_dot, &saveptr)) {
         //printf("infos = %s\n", infos);
         if(info_pos == 0) {
             dummy.name = (char*)malloc(strlen(infos) * sizeof(char) + 1);
@@ -200,11 +201,12 @@ void load_hash_file(hash* hash_table, const char* path) {
         //printf("%s\n", line_buffer);
         if(!strcmp(line_buffer, "\n")) continue;
 
-        char* diff_students = strtok(line_buffer, comma);
+        char* saveptr;
+        char* diff_students = __strtok_r(line_buffer, comma, &saveptr);
         if(diff_students == NULL) {
             add_student_from_file(hash_table, line_buffer);
         }
-        for(; diff_students != NULL; diff_students = strtok(NULL, comma)) {
+        for(; diff_students != NULL; diff_students = __strtok_r(NULL, comma, &saveptr)) {
             add_student_from_file(hash_table, diff_students);
         }
         //printf("end line\n");

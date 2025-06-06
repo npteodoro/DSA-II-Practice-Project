@@ -19,7 +19,6 @@ void free_list(list* lst) {
     while(curr != NULL) {
         node* to_free = curr;
         curr = curr->nxt;
-        printf("freeing %s, %s\n", to_free->data.course, to_free->data.name);
         free(to_free->data.course);
         free(to_free->data.name);
         free(to_free);
@@ -55,6 +54,7 @@ void insert_element(list* lst, student new_student) {
     if(lst->head == NULL) {
         lst->head = new_node;
         new_node->nxt = NULL;
+        lst->list_size++;
         return;
     }
 
@@ -77,14 +77,18 @@ void remove_element(list* lst, const char* name_to_remove) {
         remove_pos++;
     }
 
+    if(remove_pos >= lst->list_size) {
+        // the person is not on the list
+        return;
+    }
+
     if(remove_pos == 0) { // element is the head
         node* out = lst->head;
         lst->head = (lst->head->nxt);
-        printf("freeing %s, %s\n", out->data.course, out->data.name);
         free(out->data.name);
         free(out->data.course);
         free(out);
-        
+        lst->list_size--;
         return;
     }
 
@@ -95,7 +99,6 @@ void remove_element(list* lst, const char* name_to_remove) {
 
     node* out = prev_out->nxt;
     prev_out->nxt = out->nxt;
-    printf("freeing %s, %s\n", out->data.course, out->data.name);
     free(out->data.name);
     free(out->data.course);
     free(out);

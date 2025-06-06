@@ -3,6 +3,13 @@
 #include <string.h>
 #include "parser.h"
 
+char* strdup(const char* s) {
+    char* copy = malloc(strlen(s) + 1);
+    if (copy) strcpy(copy, s);
+    return copy;
+}
+
+
 int check_parser_command(const char* command) {
     if( !strcmp(command, "criar") ) {
         return CREATE;
@@ -60,7 +67,7 @@ char** parse_students_names(char* input_names, int* list_size) {
     char comma[] = ",";
     int i = 0;
     for(char* name = strtok(input_names, comma); name != NULL; name = strtok(NULL, comma)) {
-        strcpy(names_list[i++], name);
+        names_list[i++] = strdup(name);
     }
 
     return names_list;
@@ -70,13 +77,14 @@ student parse_student(char* input_student) {
     char double_dot[] = ":";
     int info_pos = 0; // 0->name; 1->nusp; 2->course
     student new_student= {
-        .name = "",
+        .name = NULL,
         .nusp = 0,
-        .course = ""
+        .course = NULL
     };
-    for(char* infos = strtok(input_student, double_dot); infos != NULL; infos = strtok(NULL, double_dot)) {
+    char* saveptr;
+    for(char* infos = __strtok_r(input_student, double_dot, &saveptr); infos != NULL; infos = __strtok_r(NULL, double_dot, &saveptr)) {
         if(info_pos == 0) {
-            new_student.name = (char*)malloc(strlen(infos) * sizeof(char));
+            new_student.name = (char*)malloc(strlen(infos) * sizeof(char) + 1);
             strcpy(new_student.name, infos);
         }
         else if(info_pos == 1) {
@@ -84,7 +92,7 @@ student parse_student(char* input_student) {
         }
         else {
             info_pos = 0;
-            new_student.course = (char*)malloc(strlen(infos) * sizeof(char));
+            new_student.course = (char*)malloc(strlen(infos) * sizeof(char) + 1);
             strcpy(new_student.course, infos);
             break;
         }
@@ -95,6 +103,7 @@ student parse_student(char* input_student) {
 
 student* parse_students_list(char* input_students, int* list_size) {
     student* students_list;
+    char* modifiable_input = strdup(input_students);
     int num_students = 1;
     for(int i = 0; i < (int)strlen(input_students); i++) {
         if(input_students[i] == ',') num_students++;
@@ -105,10 +114,13 @@ student* parse_students_list(char* input_students, int* list_size) {
 
     char comma[] = ",";
     int i = 0;
-    for(char* stdnt = strtok(input_students, comma); stdnt != NULL; stdnt = strtok(NULL, comma)) {
-        students_list[i] = parse_student(stdnt);
+    char* saveptr;
+
+    for(char* stdnt = __strtok_r(modifiable_input, comma, &saveptr); stdnt != NULL; stdnt = __strtok_r(NULL, comma, &saveptr)) {
+        students_list[i++] = parse_student(stdnt);
     }
 
+    free(modifiable_input);
     return students_list;
 }
 
@@ -127,14 +139,17 @@ parser* parse_command_line_arguments(int arg_count, char* arg_values[]) {
     switch( p->command ) {
         case CREATE: // main criar <tamanho> <path>
             p->size = atoi(arg_values[2]);
+            p->path = malloc(strlen(arg_values[3]) + 1);
             strcpy(p->path, arg_values[3]);
             break;
         case INSERT: // main inserir <path> <lista de estudantes>
+            if(p->path == NULL) p->path = malloc(strlen(arg_values[3]) + 1);
             strcpy(p->path, arg_values[2]);
             p->new_students = parse_students_list(arg_values[3], &p->input_size);
             break;
         case REMOVE: // main remover <path> <lista de nomes>
         case SEARCH: // main buscar <path> <lista de nomes>
+            if(p->path == NULL) p->path = malloc(strlen(arg_values[3]) + 1);
             strcpy(p->path, arg_values[2]);
             p->names = parse_students_names(arg_values[3], &p->input_size);
             break;
