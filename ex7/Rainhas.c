@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Rainhas.h"
+#define INF 1000000000
 
 // Verifica se a solução atual já foi registrada (para evitar duplicatas)
 int verify_for_replicas(int *cur_table, int tsize, int *tsol, int **cur_sol)
@@ -27,9 +28,16 @@ int verify_for_replicas(int *cur_table, int tsize, int *tsol, int **cur_sol)
 // Reflete o tabuleiro verticalmente (simetria)
 void vertical_reflect(int *cur_table, int tsize)
 {
+    int *aux_table = malloc(tsize * sizeof(int));
+    // Constrói o tabuleiro refletido   
     for(int i = 0; i < tsize; i++){
-        cur_table[i] = tsize - cur_table[i] - 1;
+        aux_table[i] = cur_table[tsize - i - 1];
     }
+    // Copia o tabuleiro refletido de volta para o original
+    for(int i = 0; i < tsize; i++){
+        cur_table[i] = aux_table[i];
+    }
+    free(aux_table);
     return;
 }
 
@@ -39,7 +47,7 @@ void rotate_ninety_degrees(int *cur_table, int tsize)
     int *aux_table = malloc(tsize * sizeof(int));
     // Constrói o tabuleiro rotacionado
     for(int i = 0 ; i < tsize; i++){
-        aux_table[cur_table[i]] = tsize - i - 1;
+        aux_table[tsize - cur_table[i] - 1] = i;
     }
     // Copia o tabuleiro rotacionado de volta para o original
     for(int i = 0; i < tsize; i++){
@@ -114,7 +122,7 @@ void find_queens(int row ,int tsize, int **vec_sol, int *cur_table, int *diag, i
            columns[i] = 1;
            diag[row + i] = 1;
            diag[3*tsize - 2 + row - i] = 1;
-           cur_table[row] = i;
+           cur_table[i] = row;
 
            // Chama recursivamente para a próxima linha
            find_queens(row + 1, tsize, vec_sol, cur_table, diag, columns, tsol, tcalls);
@@ -139,7 +147,7 @@ void exec(int *testes)
 {
     for(int i = 0; i < 2; i++){
         int n = testes[i];
-        if(n == 0) break; // Termina se valor for zero
+        if(n == INF) break; // Termina se valor for zero
 
         // Aloca memória para as soluções
         int **vec_sol = (int**)malloc(10000*sizeof(int *));
@@ -160,15 +168,13 @@ void exec(int *testes)
         find_queens(0,n,vec_sol,cur_table,diag,columns, &tsol, &tcalls);
 
         // Exibe as soluções, se existirem
-        if(tsol != 0)
+        if(tsol != 0 && n != 0)
             for(int i = 0; i < tsol; i++){
                 for(int j = 0; j < n; j++){
-                    if(j == 0)
-                        printf("[%d," ,vec_sol[i][j]);
-                    else if(j == n - 1)
-                        printf("%d]" ,vec_sol[i][j]);
-                    else
-                        printf("%d,", vec_sol[i][j]);
+                    if(j == 0) printf("[");
+                    printf("%d", vec_sol[i][j]);
+                    if(j != n - 1) printf(",");
+                    if(j == n - 1) printf("]");
                 }
                 printf("\n");
             }

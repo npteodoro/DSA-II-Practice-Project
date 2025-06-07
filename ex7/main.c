@@ -2,6 +2,7 @@
 #include <stdlib.h>      // Biblioteca para alocação de memória, conversão de strings e outras utilidades (ex: malloc, free, atoi)
 #include <string.h>      // Biblioteca para manipulação de strings (ex: strlen, strcpy)
 #include "Rainhas.h"     // Inclusão do cabeçalho onde está declarada a função 'exec' e possivelmente outras auxiliares do problema das N rainhas
+#define INF 1000000000
 
 int main(int argc, char *argv[])
 {
@@ -27,8 +28,8 @@ int main(int argc, char *argv[])
         // Converte o conteúdo do buffer (string) para inteiro e armazena em testes[0]
         testes[0] = atoi(buffer);
 
-        // Define o segundo valor como 0 (nesse código ele não é utilizado ativamente)
-        testes[1] = 0;
+        // Define o segundo valor como INF (nesse código ele não é utilizado ativamente)
+        testes[1] = INF;
 
         // Libera a memória alocada para o buffer após o uso
         free(buffer);
