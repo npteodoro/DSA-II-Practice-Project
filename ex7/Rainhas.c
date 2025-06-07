@@ -128,6 +128,12 @@ void find_queens(int row ,int tsize, int **vec_sol, int *cur_table, int *diag, i
     return;
 }
 
+void fill_with_zero(int* vector, int vector_size) {
+    for(int i = 0; i < vector_size; i++) {
+        vector[i] = 0;
+    }
+}
+
 // Função principal de execução: resolve o problema para um vetor de tamanhos de tabuleiro
 void exec(int *testes)
 {
@@ -142,8 +148,11 @@ void exec(int *testes)
         }
 
         int *cur_table = malloc(n*sizeof(int));               // Armazena uma solução parcial
+        fill_with_zero(cur_table, n);
         int *diag = malloc((4*n - 2)*sizeof(int));            // Marca ocupação das diagonais
+        fill_with_zero(diag, 4*n - 2);
         int *columns = malloc(n*sizeof(int));                 // Marca ocupação das colunas
+        fill_with_zero(columns, n);
         int tsol = 0;                                          // Total de soluções
         int tcalls = 0;                                        // Total de chamadas recursivas
 
@@ -171,6 +180,9 @@ void exec(int *testes)
         printf("O numero de solucoes e %d\n", tsol);
 
         // Libera memória
+        for(int i = 0; i < 10000; i++) {
+            free(vec_sol[i]);
+        }
         free(vec_sol);
         free(cur_table);
         free(diag);
