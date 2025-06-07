@@ -133,8 +133,8 @@ unsigned int count_file_lines(const char* path) {
     }
     
     unsigned int lines = 0;
-    while(!feof(file)) {
-        char ch = fgetc(file);
+    int ch;
+    while((ch = fgetc(file)) != EOF) {
         if(ch == '\n') lines++;
     }
 
