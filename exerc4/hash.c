@@ -67,7 +67,8 @@ unsigned int rotl(unsigned int value, unsigned int n_bits) {
 
 unsigned int h1(const char* name) {
     unsigned int key = 0;
-    for(unsigned long i = 0; i < strlen(name); i++) {
+    size_t name_len = strlen(name);
+    for(unsigned long i = 0; i < name_len; i++) {
         key += ( (int)name[i] << (i % 8));
     }
     return (rotl(key, 13));
