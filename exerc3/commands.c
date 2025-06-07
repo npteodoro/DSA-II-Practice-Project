@@ -53,7 +53,7 @@ int inserirCommand(int argc, char *argv[]) {
             printf("Success\n");
             result = 0;
         } else {
-            printf("insertcount == %d\n", insertCount);
+            // Debug print statement removed for cleaner production output.
             printf("Failure\n");
         }
         
