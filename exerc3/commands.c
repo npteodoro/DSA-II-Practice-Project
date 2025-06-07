@@ -44,7 +44,7 @@ int inserirCommand(int argc, char *argv[]) {
     else {
         // Load hash table from file
         insertTable = loadHashTableFromFile(argv[2]);
-        
+    
         // Insert students from string
         insertCount = insertStudentsFromString(insertTable, argv[3]);
         
@@ -101,27 +101,17 @@ int removerCommand(int argc, char *argv[]) {
 
     // Load the hash table from the file
     deleteTable = loadHashTableFromFile(argv[2]);
-    if (!deleteTable) {
-        printf("Failure\n");
-        return result;
-    }
 
     // Duplicate the input string to safely tokenize it
     nuspCopy = strdup(argv[3]);
-    if (!nuspCopy) {
-        printf("Failure\n");
-        destroyHashTable(deleteTable);
-        return result;
-    }
 
     // Tokenize the input string to extract NUSPs
     token = strtok(nuspCopy, ",");
     while (token) {
         // Parse the NUSP and attempt to delete it
         if (sscanf(token, "%u", &nusp) == 1) {
-            if (deleteStudent(deleteTable, nusp)) {
+            if (deleteStudent(deleteTable, nusp))
                 deleteSuccess = 1;
-            }
         }
         token = strtok(NULL, ",");
     }
@@ -130,9 +120,8 @@ int removerCommand(int argc, char *argv[]) {
     if (deleteSuccess && saveHashTableToFile(argv[2], deleteTable)) {
         printf("Success\n");
         result = 0;
-    } else {
+    } else
         printf("Failure\n");
-    }
 
     // Clean up
     free(nuspCopy);
