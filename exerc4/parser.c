@@ -68,7 +68,8 @@ char** parse_students_names(char* input_names, int* list_size) {
 
     char comma[] = ",";
     int i = 0;
-    for(char* name = strtok(input_names, comma); name != NULL; name = strtok(NULL, comma)) {
+    char* input_modifiable = strdup(input_names);
+    for(char* name = strtok(input_modifiable, comma); name != NULL; name = strtok(NULL, comma)) {
         names_list[i++] = strdup(name);
     }
 

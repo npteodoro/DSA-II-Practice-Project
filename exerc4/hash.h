@@ -8,7 +8,7 @@ typedef struct hash
     FILE* fhash;
     char* fpath;
     unsigned int capacity; // m
-    list** student_list; // student list (TODO: linked list for collision)
+    list** student_list; 
 } hash;
 
 hash* new_hash();
