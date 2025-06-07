@@ -48,6 +48,7 @@ void free_parser(parser* p) {
             for(int i = 0; i < p->input_size; i++) 
                 free(p->names[i]);
             free(p->names);
+
         }
         else if(p->command == INSERT) {
             free(p->new_students);
