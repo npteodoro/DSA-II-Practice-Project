@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200112L
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,6 +47,8 @@ void free_parser(parser* p) {
         if(p->command == SEARCH || p->command == REMOVE) {
             for(int i = 0; i < p->input_size; i++) 
                 free(p->names[i]);
+            free(p->names);
+
         }
         else if(p->command == INSERT) {
             free(p->new_students);
@@ -66,9 +69,11 @@ char** parse_students_names(char* input_names, int* list_size) {
 
     char comma[] = ",";
     int i = 0;
-    for(char* name = strtok(input_names, comma); name != NULL; name = strtok(NULL, comma)) {
+    char* input_modifiable = strdup(input_names);
+    for(char* name = strtok(input_modifiable, comma); name != NULL; name = strtok(NULL, comma)) {
         names_list[i++] = strdup(name);
     }
+    free(input_modifiable);
 
     return names_list;
 }
@@ -82,7 +87,7 @@ student parse_student(char* input_student) {
         .course = NULL
     };
     char* saveptr;
-    for(char* infos = __strtok_r(input_student, double_dot, &saveptr); infos != NULL; infos = __strtok_r(NULL, double_dot, &saveptr)) {
+    for(char* infos = strtok_r(input_student, double_dot, &saveptr); infos != NULL; infos = strtok_r(NULL, double_dot, &saveptr)) {
         if(info_pos == 0) {
             new_student.name = (char*)malloc(strlen(infos) * sizeof(char) + 1);
             strcpy(new_student.name, infos);
@@ -116,7 +121,7 @@ student* parse_students_list(char* input_students, int* list_size) {
     int i = 0;
     char* saveptr;
 
-    for(char* stdnt = __strtok_r(modifiable_input, comma, &saveptr); stdnt != NULL; stdnt = __strtok_r(NULL, comma, &saveptr)) {
+    for(char* stdnt = strtok_r(modifiable_input, comma, &saveptr); stdnt != NULL; stdnt = strtok_r(NULL, comma, &saveptr)) {
         students_list[i++] = parse_student(stdnt);
     }
 
