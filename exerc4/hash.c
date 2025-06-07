@@ -9,7 +9,9 @@ hash* new_hash() {
 
     h->capacity = 0;
     h->student_list = NULL;
-    
+    h->fpath = NULL;
+    h->fhash = NULL;
+
     return h;
 }
 
