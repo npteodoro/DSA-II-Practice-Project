@@ -60,7 +60,6 @@ int deleteStudent(struct HashTable *table, unsigned int nusp) {
     if (!deleted)
         deleted = deleteWithProbing(table, nusp, 2);
     
-    table->count -= deleted; // Decrease count only if deletion was successful
     table->loadFactor = (float)table->count / table->size;
 
     return deleted;
