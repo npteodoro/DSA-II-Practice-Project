@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200112L
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -152,7 +153,7 @@ void add_student_from_file(hash* hash_table, char* file_line) {
     };
     char double_dot[] = ":";
     char* saveptr;
-    for(char* infos = __strtok_r(file_line, double_dot, &saveptr); infos != NULL; infos = __strtok_r(NULL, double_dot, &saveptr)) {
+    for(char* infos = strtok_r(file_line, double_dot, &saveptr); infos != NULL; infos = strtok_r(NULL, double_dot, &saveptr)) {
         //printf("infos = %s\n", infos);
         if(info_pos == 0) {
             dummy.name = (char*)malloc(strlen(infos) * sizeof(char) + 1);
@@ -175,7 +176,7 @@ void add_student_from_file(hash* hash_table, char* file_line) {
 
 }
 
-void load_hash_file(hash* hash_table, const char* path) {
+int load_hash_file(hash* hash_table, const char* path) {
     if(hash_table->student_list != NULL) {
         for(unsigned int i = 0; i < hash_table->capacity; i++) 
             free_list(hash_table->student_list[i]);
@@ -190,8 +191,8 @@ void load_hash_file(hash* hash_table, const char* path) {
     
     FILE* fhash = fopen(path, "r");
     if(fhash == NULL) {
-        printf("error reading file\n");
-        return;
+        printf("Failure\n");
+        return 0;
     }
 
     char comma[] = ",";
@@ -216,5 +217,6 @@ void load_hash_file(hash* hash_table, const char* path) {
     }
 
     fclose(fhash);
+    return 1;
 
 }

@@ -8,6 +8,7 @@
 #define DEFAULT_PATH "hash_nome.txt"
 
 int is_prime(int x) {
+    if(x < 2) return 0;
     for(int i = 2; i * i <= x; i++) {
         if(x % i == 0) return 0;
     }
@@ -75,6 +76,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
+    int success = 1;
     switch (input_parser->command)
     {
     case NONE:
@@ -86,33 +88,38 @@ int main(int argc, char* argv[]) {
         save_hash_file(hash_table, input_parser->path);
         break;
     case SEARCH:
-        //hash_capacity = count_file_lines(input_parser->path);
-        //initialize_hash(hash_table, hash_capacity, input_parser->path);
-        load_hash_file(hash_table, input_parser->path);
-        //save_hash_file(hash_table, input_parser->path);
+        success = load_hash_file(hash_table, input_parser->path);
+        if(!success) break;
         for(int i = 0; i < input_parser->input_size; i++) {
             hash_search(hash_table, input_parser->names[i]);
         }
         break;
     case INSERT:
         hash_capacity = count_file_lines(input_parser->path);
-        //initialize_hash(hash_table, hash_capacity, input_parser->path);
-        load_hash_file(hash_table, input_parser->path);
+        success = load_hash_file(hash_table, input_parser->path);
+        if(!success) {
+            printf("Failure\n");
+            break;
+        }
         for(int i = 0; i < input_parser->input_size; i++) {
             hash_insert(hash_table, input_parser->new_students[i]);
             free(input_parser->new_students[i].course);
             free(input_parser->new_students[i].name);
         }
         save_hash_file(hash_table, input_parser->path);
+        printf("Success\n");
         break;
     case REMOVE:
-        //hash_capacity = count_file_lines(input_parser->path);
-        //initialize_hash(hash_table, hash_capacity, input_parser->path);
-        load_hash_file(hash_table, input_parser->path);
+        success = load_hash_file(hash_table, input_parser->path);
+        if(!success) {
+            printf("Failure\n");
+            break;
+        }
         for(int i = 0; i < input_parser->input_size; i++) {
             hash_remove(hash_table, input_parser->names[i]);
         }
         save_hash_file(hash_table, input_parser->path);
+        printf("Success\n");
         break;
     default:
         break;
