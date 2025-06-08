@@ -115,13 +115,14 @@ void find_queens(int row ,int tsize, int **vec_sol, int *cur_table, int *diag, i
     // Tenta colocar a rainha em todas as colunas disponíveis da linha atual
     for(int i = 0; i < tsize; i++)
     {
+        int anti_diag_idx = 3*tsize - 2 + row - i; // Índice da antidiagonal principal
         // Verifica se a coluna e diagonais estão livres
-        if(columns[i] != 1 && diag[row + i] != 1 && diag[3*tsize - 2 + row - i] != 1)
+        if(columns[i] != 1 && diag[row + i] != 1 && diag[anti_diag_idx] != 1)
         {
            // Marca as posições ocupadas
            columns[i] = 1;
            diag[row + i] = 1;
-           diag[3*tsize - 2 + row - i] = 1;
+           diag[anti_diag_idx] = 1;
            cur_table[i] = row;
 
            // Chama recursivamente para a próxima linha
