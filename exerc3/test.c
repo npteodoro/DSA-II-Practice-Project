@@ -40,7 +40,6 @@ void runDefaultTest(void) {
     
     // Search for students (2 existing, 1 non-existent)
     students = findStudentsByNUSP(table, "420,24,777", &count);
-    printf("%d", count);
     // Display results
     for (i = 0; i < count; i++) {
         if (students[i])
