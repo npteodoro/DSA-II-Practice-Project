@@ -1,4 +1,0 @@
-criar 15 hash_test.txt
-inserir hash_test.txt 189274,"mateus claudino","eng comp",934003,"kaue antonio",arq,743821,bbzao,fisica,1024,Ana,"engenharia civil",2077,Bruno,"ciência da computação",314,Carla,"engenharia elétrica",728,Daniel,física,519,Eduarda,"matemática aplicada",843,Felipe,"engenharia mecânica",661,Gabriela,arquitetura,390,Henrique,estatística,275,Isabela,"engenharia de produção",1568,João,"engenharia ambiental",437,Larissa,química,982,Matheus,"engenharia de controle e automação"
-buscar hash_test.txt 934003,314,743821,999999,0,661,982,89324,187231
-remover hash_test.txt 189274,314,843,912398,263,12,1283,743821,2077
