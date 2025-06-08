@@ -23,7 +23,7 @@ void quicksort(int* arr, int start, int arr_size) {
     int pivot = arr[pivot_pos];
     
     // 'smaller' tracks the boundary: all elements from 'smaller' to end are < pivot
-    int smaller = arr_size;
+    int right_bound = arr_size;
     
     // Start from the rightmost element and work backwards
     int index = arr_size - 1;
@@ -31,15 +31,15 @@ void quicksort(int* arr, int start, int arr_size) {
     // Partition phase: move all elements smaller than pivot to the right side
     while(index > start) {
         if(arr[index] < pivot) {
-            smaller--;  // Move the boundary left
+            right_bound--;  // Move the boundary left
             // Swap current element with the element at the boundary
-            swap_int(&arr[smaller], &arr[index]);
+            swap_int(&arr[right_bound], &arr[index]);
         }
         index--;  // Move to the next element (going right to left)
     }
     
     // Calculate final position for pivot (just before the smaller elements)
-    pivot_pos = smaller - 1;
+    pivot_pos = right_bound - 1;
     
     // Move pivot from start position to its correct sorted position
     swap_int(&arr[start], &arr[pivot_pos]);
